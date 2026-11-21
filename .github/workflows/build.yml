@@ -1,0 +1,30 @@
+
+name: Build Tiket Bus C++
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Mengambil File Project
+        uses: actions/checkout@v4
+
+      - name: Install Compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++-mingw-w64-x86-64
+
+      - name: Membuat File EXE
+        run: |
+          x86_64-w64-mingw32-g++ main.cpp -o tiket_bus.exe -static -std=c++11
+
+      - name: Upload File EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: Aplikasi-Tiket-Bus
+          path: tiket_bus.exe
